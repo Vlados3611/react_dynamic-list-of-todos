@@ -1,15 +1,16 @@
 import { createContext } from 'react';
 import { Todo } from './types/Todo';
+import { FilterType } from './enums/FilterType';
 
 type State = {
   todos: Todo[];
   currentTodo: Todo;
   touchedTodo: boolean;
-  sortTodo: string;
+  filterTodo: FilterType;
   searchTitle: string;
   openCurrentTodo: (todo: Todo) => void;
   closeCurrentTodo: () => void;
-  setSortTodo: (sortType: string) => void;
+  setFilterTodo: (callback: () => FilterType) => void;
   setSearchTitle: (filterTitle: string) => void;
 };
 
@@ -22,10 +23,10 @@ export const TodoContext = createContext<State>({
     userId: 0,
   },
   touchedTodo: false,
-  sortTodo: '',
+  filterTodo: FilterType.All,
   searchTitle: '',
   openCurrentTodo: () => {},
   closeCurrentTodo: () => {},
-  setSortTodo: () => {},
+  setFilterTodo: () => {},
   setSearchTitle: () => {},
 });

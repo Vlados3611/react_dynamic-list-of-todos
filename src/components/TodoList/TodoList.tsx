@@ -7,36 +7,37 @@ import React, {
 import { TodoInfo } from '../TodoInfo/TodoInfo';
 import { TodoContext } from '../../TodoContext';
 import { Todo } from '../../types/Todo';
+import { FilterType } from '../../enums/FilterType';
 
 export const TodoList: React.FC = () => {
   const {
     todos,
-    sortTodo,
+    filterTodo,
     searchTitle,
   } = useContext(TodoContext);
 
-  const sortTodoBy = useCallback(
-    (todosList: Todo[], sortBy: string, filterTodos): Todo[] => {
+  const filterTodoBy = useCallback(
+    (todosList: Todo[], filterByType: string, filterBySearch): Todo[] => {
       const filteredTodos = todosList.filter((todo) => (
-        todo.title.toLowerCase().includes(filterTodos.toLowerCase())
+        todo.title.toLowerCase().includes(filterBySearch.toLowerCase())
       ));
 
-      switch (sortBy) {
-        case 'active':
+      switch (filterByType) {
+        case FilterType.Active:
           return filteredTodos.filter((todo: Todo) => !todo.completed);
 
-        case 'completed':
+        case FilterType.Completed:
           return filteredTodos.filter((todo: Todo) => todo.completed);
 
         default:
           return filteredTodos;
       }
-    }, [sortTodo, searchTitle],
+    }, [filterTodo, searchTitle],
   );
 
   const filteredTodos = useMemo(() => {
-    return sortTodoBy(todos, sortTodo, searchTitle);
-  }, [sortTodo, searchTitle]);
+    return filterTodoBy(todos, filterTodo, searchTitle);
+  }, [filterTodo, searchTitle]);
 
   return (
     <table className="table is-narrow is-fullwidth">

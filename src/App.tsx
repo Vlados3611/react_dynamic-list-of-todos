@@ -9,6 +9,7 @@ import '@fortawesome/fontawesome-free/css/all.css';
 import { TodoContext } from './TodoContext';
 
 import { Todo } from './types/Todo';
+import { FilterType } from './enums/FilterType';
 
 import { TodoList } from './components/TodoList';
 import { TodoFilter } from './components/TodoFilter';
@@ -28,7 +29,7 @@ export const App: React.FC = () => {
     userId: 0,
   });
   const [touchedTodo, setTouchTodo] = useState<boolean>(false);
-  const [sortTodo, setSortTodo] = useState<string>('');
+  const [filterTodo, setFilterTodo] = useState<FilterType>(FilterType.All);
   const [searchTitle, setSearchTitle] = useState<string>('');
 
   const openCurrentTodo = (todo: Todo) => {
@@ -62,11 +63,11 @@ export const App: React.FC = () => {
         todos,
         currentTodo,
         touchedTodo,
-        sortTodo,
+        filterTodo,
         searchTitle,
         openCurrentTodo,
         closeCurrentTodo,
-        setSortTodo,
+        setFilterTodo,
         setSearchTitle,
       }}
       >

@@ -1,12 +1,27 @@
 import React, { useContext } from 'react';
 
+import { FilterType } from '../../enums/FilterType';
+
 import { TodoContext } from '../../TodoContext';
+
+const changeFilterType = (filterBy: string) => {
+  switch (filterBy) {
+    case FilterType.Active:
+      return FilterType.Active;
+
+    case FilterType.Completed:
+      return FilterType.Completed;
+
+    default:
+      return FilterType.All;
+  }
+};
 
 export const TodoFilter: React.FC = () => {
   const {
-    sortTodo,
+    filterTodo,
     searchTitle,
-    setSortTodo,
+    setFilterTodo,
     setSearchTitle,
   } = useContext(TodoContext);
 
@@ -15,21 +30,22 @@ export const TodoFilter: React.FC = () => {
       <p className="control">
         <span className="select">
           <select
-            value={sortTodo}
+            value={filterTodo}
             data-cy="statusSelect"
             onChange={(event) => {
-              setSortTodo(event.target.value);
+              const { value } = event.target;
+
+              setFilterTodo(() => changeFilterType(value));
             }}
           >
-            <option value="all">
-              All
-            </option>
-            <option value="active">
-              Active
-            </option>
-            <option value="completed">
-              Completed
-            </option>
+            {Object.values(FilterType).map((filterTypes) => (
+              <option
+                key={filterTypes}
+                value={filterTypes}
+              >
+                {filterTypes}
+              </option>
+            ))}
           </select>
         </span>
       </p>
