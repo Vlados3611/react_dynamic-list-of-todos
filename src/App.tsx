@@ -41,10 +41,10 @@ export const App: React.FC = () => {
     setTouchTodo(false);
   };
 
-  const getTodosAPI = async (loadedFunction: any) => {
+  const getTodosAPI = async () => {
     setIsLoaded(false);
     try {
-      const initialTodos = await loadedFunction();
+      const initialTodos = await getTodos();
 
       setTodos(initialTodos);
       setIsLoaded(true);
@@ -54,7 +54,7 @@ export const App: React.FC = () => {
   };
 
   useEffect(() => {
-    getTodosAPI(getTodos);
+    getTodosAPI();
   }, []);
 
   return (
